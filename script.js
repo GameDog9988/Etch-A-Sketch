@@ -1,13 +1,28 @@
 const container = document.getElementById("container");
+const newGridBtn = document.getElementById("newGridBtn");
+let gridNum = 0;
 
-function makeRows(rows, cols) {
-  container.style.setProperty("--grid-rows", rows);
-  container.style.setProperty("--grid-cols", cols);
-  for (c = 0; c < rows * cols; c++) {
+function makeRows(gridNum) {
+  container.style.setProperty("--grid-num", gridNum);
+  for (c = 0; c < gridNum ** 2; c++) {
     let cell = document.createElement("div");
-    cell.innerText = c + 1;
     container.appendChild(cell).className = "grid-item";
   }
+  document.querySelectorAll(".grid-item").forEach((element) => {
+    element.addEventListener("mouseover", function (e) {
+      e.target.style.backgroundColor = "gray";
+    });
+  });
 }
 
-makeRows(16, 16);
+newGridBtn.addEventListener("click", () => {
+  clearGrid();
+  gridNum = prompt("How many rows and columns would you like?", gridNum);
+  makeRows(gridNum);
+});
+
+function clearGrid() {
+  container.innerHTML = "";
+}
+
+makeRows(16);
